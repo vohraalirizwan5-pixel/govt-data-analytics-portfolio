@@ -1,0 +1,46 @@
+DAX MEASURES FOR THE GST DASHBOARD
+Paste each one separately: right-click the GST table -> New measure -> paste -> Enter.
+(Copy from "Total GST" down to the end of the formula. Don't copy the lines starting with //)
+
+------------------------------------------------------------
+// 1. Total GST - the main number every chart uses
+Total GST = SUM ( GST[total_gst_excl_cess] )
+
+------------------------------------------------------------
+// 2. GST in FY 2024-25
+GST FY25 = CALCULATE ( [Total GST], GST[financial_year] = "2024-25" )
+
+------------------------------------------------------------
+// 3. GST in FY 2023-24
+GST FY24 = CALCULATE ( [Total GST], GST[financial_year] = "2023-24" )
+
+------------------------------------------------------------
+// 4. Year-on-year growth (set format to Percentage)
+YoY Growth % = DIVIDE ( [GST FY25] - [GST FY24], [GST FY24] )
+
+------------------------------------------------------------
+// 5. Maharashtra's share of all GST (set format to Percentage)
+//    ALL(GST) removes filters, so the bottom of the fraction is always the full total
+Maharashtra Share =
+DIVIDE (
+    CALCULATE ( [Total GST], GST[state_name] = "Maharashtra" ),
+    CALCULATE ( [Total GST], ALL ( GST ) )
+)
+
+------------------------------------------------------------
+// 6. Name of the fastest-growing state in FY 2024-25
+Fastest Growing State =
+VAR Growth =
+    ADDCOLUMNS (
+        VALUES ( GST[state_name] ),
+        "@g", [YoY Growth %]
+    )
+RETURN
+    MAXX ( TOPN ( 1, Growth, [@g], DESC ), GST[state_name] )
+
+------------------------------------------------------------
+EXPECTED VALUES (with no slicer selected) - use these to check your work:
+  GST FY25            = 15,28,057 crore (about 15.3 lakh crore; Power BI may show it as 1.53M)
+  YoY Growth %        = 10.3%
+  Maharashtra Share   = 20.9%
+  Fastest Growing     = Haryana

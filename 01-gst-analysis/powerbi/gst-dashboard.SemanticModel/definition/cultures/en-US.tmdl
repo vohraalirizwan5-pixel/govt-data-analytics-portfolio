@@ -1,0 +1,95 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "gst.gst_fy25": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "GST",
+			          "ConceptualProperty": "GST FY25"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total GST, FY 2024-25 (Rs crore)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "gst.yoy_growth_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "GST",
+			          "ConceptualProperty": "YoY Growth %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Growth vs FY 2023-24": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "gst.maharashtra_share": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "GST",
+			          "ConceptualProperty": "Maharashtra Share"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Maharashtra's share of GST": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "gst.fastest_growing_state": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "GST",
+			          "ConceptualProperty": "Fastest Growing State"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Fastest growing (FY25)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

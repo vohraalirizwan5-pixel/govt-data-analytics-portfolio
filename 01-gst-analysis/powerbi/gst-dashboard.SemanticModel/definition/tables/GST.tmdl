@@ -1,0 +1,181 @@
+table GST
+	lineageTag: a45ca7a4-e163-4cae-9554-8909c0cfd5d8
+
+	measure 'Total GST' = SUM ( GST[total_gst_excl_cess] )
+		formatString: #,0
+		lineageTag: 57c0005f-1dd4-44fa-b676-4360f7d5660c
+
+	measure 'GST FY25' = CALCULATE ( [Total GST], GST[financial_year] = "2024-25" )
+		formatString: #,0
+		lineageTag: 0762465b-6407-4c7f-a21a-41ac2c19fb5c
+
+	measure 'GST FY24' = CALCULATE ( [Total GST], GST[financial_year] = "2023-24" )
+		formatString: #,0
+		lineageTag: fbe20511-7879-46b0-a601-a965fa6799ca
+
+	measure 'YoY Growth %' = DIVIDE ( [GST FY25] - [GST FY24], [GST FY24] )
+		formatString: 0.0%
+		lineageTag: 3f644624-c126-48a2-b92c-cf45593a49c9
+
+	measure 'Maharashtra Share' =
+			DIVIDE (
+			    CALCULATE ( [Total GST], GST[state_name] = "Maharashtra" ),
+			    CALCULATE ( [Total GST], ALL ( GST ) )
+			)
+		formatString: 0.0%
+		lineageTag: 730d072c-6ae0-40ef-aa4c-4f01fdccd4e4
+
+	measure 'Fastest Growing State' =
+			VAR Growth =
+			    ADDCOLUMNS (
+			        VALUES ( GST[state_name] ),
+			        "@g", [YoY Growth %]
+			    )
+			RETURN
+			    MAXX ( TOPN ( 1, Growth, [@g], DESC ), GST[state_name] )
+		lineageTag: 4af914c3-28b7-4091-ae3f-6794fa1209f6
+
+	column date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: f10d4f5d-d8bd-4a9b-820f-ec39f9ab3e85
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column financial_year
+		dataType: string
+		lineageTag: 165c15a3-807b-487e-9071-2b2916d5b82a
+		summarizeBy: none
+		sourceColumn: financial_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: d6e15b62-e458-4b4c-9537-a54a1d14a3d6
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_num
+		dataType: int64
+		formatString: 0
+		lineageTag: e7cb5584-1668-436e-936e-cb697d42d1bb
+		summarizeBy: none
+		sourceColumn: month_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: string
+		lineageTag: a84bde09-8300-4768-adae-9898c8849b0e
+		summarizeBy: none
+		sourceColumn: month
+		sortByColumn: month_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column state_name
+		dataType: string
+		lineageTag: 000ba750-1d95-464e-9bf9-1a0554edc04d
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: state_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column state_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 51d1a801-73d2-48e2-a952-b29ef918d124
+		summarizeBy: none
+		sourceColumn: state_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 6636341e-fa79-4af6-82f2-8aad4881da14
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column cgst
+		dataType: double
+		formatString: #,0.00
+		lineageTag: c6dec939-5985-45d4-85b0-29776b7710d6
+		summarizeBy: sum
+		sourceColumn: cgst
+
+		annotation SummarizationSetBy = Automatic
+
+	column sgst
+		dataType: double
+		formatString: #,0.00
+		lineageTag: cbf849fe-bfcc-40be-912e-4ff33a859661
+		summarizeBy: sum
+		sourceColumn: sgst
+
+		annotation SummarizationSetBy = Automatic
+
+	column igst
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 84fd162b-05ff-47b0-b320-7caf8ee461cc
+		summarizeBy: sum
+		sourceColumn: igst
+
+		annotation SummarizationSetBy = Automatic
+
+	column cess
+		dataType: double
+		formatString: #,0.00
+		lineageTag: e576d801-db3b-4bd4-9aca-ee214f499884
+		summarizeBy: sum
+		sourceColumn: cess
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_gst_excl_cess
+		dataType: double
+		formatString: #,0.00
+		lineageTag: f042d12c-3c73-4c86-902d-df031e0067d9
+		summarizeBy: sum
+		sourceColumn: total_gst_excl_cess
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_gst
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 64380e21-e2ee-4680-bbd7-96e1c0d3943c
+		summarizeBy: sum
+		sourceColumn: total_gst
+
+		annotation SummarizationSetBy = Automatic
+
+	column cess_flag
+		dataType: string
+		lineageTag: 5b2565af-9485-4663-8aeb-a0d3eff2fe02
+		summarizeBy: none
+		sourceColumn: cess_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition GST = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\aliri\OneDrive\Vohra-Projects\data analytics for govt\01-gst-analysis\data\clean\gst-collection-clean.csv"), [Delimiter = ",", Columns = 15, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"date", type date}, {"financial_year", type text}, {"year", Int64.Type}, {"month_num", Int64.Type}, {"month", type text}, {"state_name", type text}, {"state_code", Int64.Type}, {"category", type text}, {"cgst", type number}, {"sgst", type number}, {"igst", type number}, {"cess", type number}, {"total_gst_excl_cess", type number}, {"total_gst", type number}, {"cess_flag", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

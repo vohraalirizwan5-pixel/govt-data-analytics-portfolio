@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "gst-dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "dc4905e5-0757-4355-b586-5c78b694a7d9"
+  }
+}
