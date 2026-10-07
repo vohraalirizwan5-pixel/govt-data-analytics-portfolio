@@ -11,7 +11,7 @@ Approach: **Learn by building.** Each project teaches one new skill.
 | # | Project | Skill | Weeks | Status |
 |---|---------|-------|-------|--------|
 | 01 | [GST Collection Analysis](01-gst-analysis/README.md) | Excel → Power BI | 1–3 | ✅ Done |
-| 02 | [Welfare Scheme Analysis (MGNREGA / PM-KISAN)](02-welfare-scheme-analysis/README.md) | SQL | 4–6 | ⬜ Not started |
+| 02 | [Welfare Scheme Analysis (MGNREGA / PM-KISAN)](02-welfare-scheme-analysis/README.md) | SQL | 4–6 | 🟨 In progress |
 | 03 | [Education / Health Analysis](03-education-health-analysis/README.md) | Power BI (multi-table) | 7–9 | ⬜ Not started |
 | 04 | [Python Data Cleaning](04-python-data-cleaning/README.md) | Python (pandas) | 10–12 | ⬜ Not started |
 
