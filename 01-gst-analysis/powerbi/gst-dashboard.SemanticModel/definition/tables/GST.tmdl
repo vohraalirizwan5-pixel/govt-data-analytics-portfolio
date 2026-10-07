@@ -171,7 +171,7 @@ table GST
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents("C:\Users\aliri\OneDrive\Vohra-Projects\data analytics for govt\01-gst-analysis\data\clean\gst-collection-clean.csv"), [Delimiter = ",", Columns = 15, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Source = Csv.Document(File.Contents("C:\Users\aliri\OneDrive\Vohra-Projects\Analytics-Intelligence-Hub\05_PROJECTS\05_Government_Analytics\govt-data-analytics-portfolio\01-gst-analysis\data\clean\gst-collection-clean.csv"), [Delimiter = ",", Columns = 15, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
 				    Typed = Table.TransformColumnTypes(Promoted, {{"date", type date}, {"financial_year", type text}, {"year", Int64.Type}, {"month_num", Int64.Type}, {"month", type text}, {"state_name", type text}, {"state_code", Int64.Type}, {"category", type text}, {"cgst", type number}, {"sgst", type number}, {"igst", type number}, {"cess", type number}, {"total_gst_excl_cess", type number}, {"total_gst", type number}, {"cess_flag", type text}}, "en-US")
 				in
